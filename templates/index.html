@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tic Tac Toe AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>Tic Tac Toe vs AI</h1>
+  <div id="board">
+    <!-- 9 buttons -->
+    {% for i in range(9) %}
+      <button onclick="playerMove({{i}})" id="cell{{i}}"> </button>
+    {% endfor %}
+  </div>
+  <p id="status"></p>
+
+<script>
+let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+
+function playerMove(index) {
+  if (board[index] === ' ') {
+    document.getElementById("cell" + index).innerText = 'X';
+    board[index] = 'X';
+    fetch('/move', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({board})
+    })
+    .then(res => res.json())
+    .then(data => {
+      board = data.board;
+      updateBoard();
+      showStatus(data.status);
+    });
+  }
+}
+
+function updateBoard() {
+  for (let i = 0; i < 9; i++) {
+    document.getElementById("cell" + i).innerText = board[i];
+  }
+}
+
+function showStatus(status) {
+  let statusText = "";
+  if (status === "ai_win") statusText = "💻 AI Wins!";
+  else if (status === "player_win") statusText = "🎉 You Win!";
+  else if (status === "draw") statusText = "😐 It's a Draw!";
+  document.getElementById("status").innerText = statusText;
+}
+</script>
+</body>
+</html>
