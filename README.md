@@ -25,8 +25,8 @@ This is a web-based Tic Tac Toe game where you play as **X** against an **unbeat
 
 ### 1. Clone or download this repo
     ```bash
-git clone https://github.com/your-username/tic-tac-toe-flask.git
-cd tic-tac-toe-flask
+    git clone https://github.com/your-username/tic-tac-toe-flask.git
+    cd tic-tac-toe-flask
 
 ### 2. Install dependencies
     ```bash
